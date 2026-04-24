@@ -1,173 +1,145 @@
 import React, { useState, useEffect } from 'react';
-import { Radio, Battery, Cpu, Database, Map, Settings, Wifi } from 'lucide-react';
+import { Car, DollarSign, Shield, Zap, Map as MapIcon, Music, Users } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const App = () => {
-  const [signals, setSignals] = useState([]);
-  const [progress, setProgress] = useState({
-    battery_level: 0,
-    scrap_count: 0,
-    hunger: 100,
-    energy: 100,
-    thirst: 100,
-    discovered_signals: []
+  const [stats, setStats] = useState({
+    money: 15420,
+    respect: 450,
+    health: 100,
+    wantedLevel: 2,
+    location: 'Ocean Beach',
+    activeVehicle: 'Infernus'
   });
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    // Simulated data fetching from Python Backend
-    const fetchData = async () => {
-      try {
-        // Mock data for initial look
-        setSignals([
-          { signal_id: 'SIG_001', name: 'Abandoned Tower', is_decoded: true, timestamp: '2024-04-24 14:30' },
-          { signal_id: 'SIG_002', name: 'Sublevel Bunker', is_decoded: false, timestamp: 'Pending...' },
-        ]);
-        setProgress({
-          battery_level: 85,
-          scrap_count: 124,
-          hunger: 72,
-          energy: 45,
-          thirst: 60,
-          discovered_signals: ['SIG_001']
-        });
-        setLoading(false);
-      } catch (error) {
-        console.error("Failed to fetch data from backend", error);
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
 
   return (
-    <div className="min-h-screen bg-[#050505] text-cyan-50 font-['Inter'] selection:bg-cyan-500/30">
-      {/* HUD Header */}
-      <header className="border-b border-cyan-900/30 bg-black/50 backdrop-blur-md sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-          <div className="flex items-center gap-3">
-            <Radio className="text-cyan-400 animate-pulse" size={28} />
-            <h1 className="font-['Orbitron'] text-xl tracking-widest font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-              LAST SIGNAL <span className="text-[10px] text-cyan-700 align-top">V1.0</span>
+    <div className="min-h-screen bg-[#1a0b2e] text-pink-100 font-['Inter'] overflow-hidden selection:bg-pink-500/30">
+      {/* 80s Grid Background */}
+      <div className="fixed inset-0 z-0 bg-[linear-gradient(to_bottom,#1a0b2e_0%,#3d1a5a_100%)]">
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(255,0,150,0.1)_1px,transparent_1px),linear-gradient(rgba(255,0,150,0.1)_1px,transparent_1px)] bg-[size:40px_40px] [transform:perspective(500px)_rotateX(60deg)_translateY(-100px)] animate-[grid_20s_linear_infinite]" />
+      </div>
+
+      {/* Main HUD */}
+      <div className="relative z-10 flex flex-col h-screen">
+        {/* Header - Neon Title */}
+        <header className="p-6 flex justify-between items-start">
+          <motion.div 
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="flex flex-col"
+          >
+            <h1 className="text-5xl font-['Orbitron'] font-black italic tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-pink-400 to-purple-600 drop-shadow-[0_0_10px_rgba(255,0,150,0.5)]">
+              VICE <span className="text-cyan-400">CLONE</span>
             </h1>
+            <span className="text-xs tracking-[0.5em] text-cyan-300 font-bold ml-1 uppercase">Criminal Enterprise</span>
+          </motion.div>
+
+          <div className="flex gap-4">
+            <HudCard icon={<DollarSign className="text-green-400" />} value={`$${stats.money.toLocaleString()}`} label="CASH" />
+            <HudCard icon={<Shield className="text-blue-400" />} value={`${stats.health}%`} label="HEALTH" />
           </div>
-          
-          <div className="flex items-center gap-8 text-sm">
-            <div className="flex items-center gap-2">
-              <Battery className={`${progress.battery_level < 20 ? 'text-red-500 animate-bounce' : 'text-green-400'}`} size={18} />
-              <span className="font-mono">{progress.battery_level}%</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Cpu className="text-amber-400" size={18} />
-              <span className="font-mono">{progress.scrap_count} UNITS</span>
-            </div>
+        </header>
+
+        {/* Center Console */}
+        <main className="flex-1 p-6 grid grid-cols-12 gap-6 items-end">
+          {/* Left Side - Navigation */}
+          <div className="col-span-3 space-y-4">
+            <NavTab icon={<MapIcon />} label="CITY MAP" />
+            <NavTab icon={<Music />} label="RADIO: FLASH FM" active />
+            <NavTab icon={<Users />} label="ASSETS" />
           </div>
-        </div>
-      </header>
 
-      <main className="max-w-7xl mx-auto p-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
-        {/* Sidebar Navigation */}
-        <nav className="lg:col-span-2 flex lg:flex-col gap-2">
-          <NavButton icon={<Database size={20} />} label="SIGNALS" active />
-          <NavButton icon={<Map size={20} />} label="MAP" />
-          <NavButton icon={<Settings size={20} />} label="SYSTEM" />
-        </nav>
-
-        {/* Main Content Area */}
-        <section className="lg:col-span-10">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {/* Vitals Summary */}
-            <div className="bg-white/5 border border-white/10 rounded-xl p-5 backdrop-blur-sm col-span-1 md:col-span-2 lg:col-span-3 flex flex-wrap gap-6 justify-around">
-              <VitalStat label="HUNGER" value={progress.hunger} color="bg-orange-500" />
-              <VitalStat label="THIRST" value={progress.thirst} color="bg-blue-400" />
-              <VitalStat label="ENERGY" value={progress.energy} color="bg-yellow-400" />
+          {/* Center - Wanted Level */}
+          <div className="col-span-6 flex flex-col items-center pb-12">
+            <div className="flex gap-2">
+              {[...Array(5)].map((_, i) => (
+                <motion.div
+                  key={i}
+                  animate={{ 
+                    scale: i < stats.wantedLevel ? [1, 1.2, 1] : 1,
+                    opacity: i < stats.wantedLevel ? 1 : 0.2
+                  }}
+                  transition={{ repeat: Infinity, duration: 1 }}
+                >
+                  <Shield size={32} className={i < stats.wantedLevel ? "text-yellow-400 fill-yellow-400 drop-shadow-[0_0_8px_rgba(255,255,0,0.8)]" : "text-gray-600"} />
+                </motion.div>
+              ))}
             </div>
+            <span className="text-xs font-bold tracking-[1em] text-yellow-500 mt-2">WANTED</span>
+          </div>
 
-            {/* Active Signals List */}
-            <div className="bg-cyan-950/10 border border-cyan-900/20 rounded-xl p-6 backdrop-blur-sm">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="font-['Orbitron'] text-sm tracking-widest text-cyan-400">DETECTED SIGNALS</h2>
-                <Wifi size={16} className="text-cyan-700" />
+          {/* Right Side - Vehicle Info */}
+          <div className="col-span-3">
+            <div className="bg-black/60 border-l-4 border-pink-500 p-6 backdrop-blur-xl rounded-r-xl">
+              <div className="flex items-center gap-3 mb-4">
+                <Car className="text-pink-400" size={24} />
+                <h2 className="font-['Orbitron'] text-sm tracking-widest text-pink-300 uppercase">Current Vehicle</h2>
               </div>
-              
-              <div className="space-y-4">
-                {signals.map(signal => (
-                  <motion.div 
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    key={signal.signal_id}
-                    className={`p-4 border rounded-lg transition-all ${
-                      signal.is_decoded 
-                        ? 'bg-cyan-500/5 border-cyan-500/20 shadow-[0_0_15px_rgba(6,182,212,0.05)]' 
-                        : 'bg-black/40 border-white/5 opacity-60'
-                    }`}
-                  >
-                    <div className="flex justify-between items-start mb-2">
-                      <span className="text-xs font-mono text-cyan-700">{signal.signal_id}</span>
-                      {signal.is_decoded && <span className="text-[10px] bg-cyan-500/20 text-cyan-400 px-2 py-0.5 rounded uppercase tracking-tighter">Decoded</span>}
-                    </div>
-                    <h3 className="font-semibold text-lg">{signal.name}</h3>
-                    <p className="text-xs text-cyan-700 mt-2">{signal.timestamp}</p>
-                  </motion.div>
-                ))}
+              <h3 className="text-3xl font-black italic text-white mb-2">{stats.activeVehicle}</h3>
+              <div className="space-y-2">
+                <ProgressBar label="Engine" value={85} color="bg-pink-500" />
+                <ProgressBar label="Body" value={92} color="bg-cyan-500" />
               </div>
-            </div>
-
-            {/* Neural Reconstruction Card */}
-            <div className="bg-blue-950/10 border border-blue-900/20 rounded-xl p-6 flex flex-col items-center justify-center text-center group overflow-hidden relative">
-              <div className="absolute inset-0 bg-gradient-to-b from-blue-500/5 to-transparent pointer-events-none" />
-              <div className="w-32 h-32 rounded-full border-2 border-dashed border-blue-500/30 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-700">
-                <div className="w-24 h-24 rounded-full border border-blue-400/50 flex items-center justify-center animate-[spin_10s_linear_infinite]">
-                  <div className="w-2 h-2 bg-blue-400 rounded-full" />
-                </div>
-              </div>
-              <h2 className="font-['Orbitron'] text-lg mb-2">NEURAL RECONSTRUCTION</h2>
-              <p className="text-sm text-blue-300/60 max-w-[250px]">
-                Reconstructing fragmented data into coherent visual memories...
-              </p>
-              <div className="mt-6 w-full bg-blue-900/20 h-1 rounded-full overflow-hidden">
-                <motion.div 
-                  initial={{ width: 0 }}
-                  animate={{ width: '42%' }}
-                  className="h-full bg-blue-500" 
-                />
-              </div>
-              <span className="text-[10px] mt-2 font-mono text-blue-500/50">STABILITY: 42.8%</span>
             </div>
           </div>
-        </section>
-      </main>
+        </main>
 
-      {/* Background Ambience */}
-      <div className="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_50%_50%,rgba(6,78,113,0.1),transparent)] pointer-events-none" />
-      <div className="fixed inset-0 -z-20 [background-image:linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] [background-size:100%_2px,3px_100%] pointer-events-none" />
+        {/* Footer - Location Bar */}
+        <footer className="p-4 bg-gradient-to-r from-pink-500/20 via-purple-500/20 to-cyan-500/20 backdrop-blur-sm border-t border-white/10">
+          <div className="max-w-7xl mx-auto flex justify-between items-center px-6">
+            <div className="flex items-center gap-4">
+              <Zap className="text-yellow-400 animate-pulse" size={16} />
+              <span className="text-xs font-mono tracking-widest uppercase text-white/80">Location: {stats.location}</span>
+            </div>
+            <div className="text-[10px] text-pink-400 font-bold tracking-widest">STABILITY: OPTIMAL // 60 FPS</div>
+          </div>
+        </footer>
+      </div>
+
+      <style dangerouslySetInnerHTML={{ __html: `
+        @keyframes grid {
+          0% { background-position: 0 0; }
+          100% { background-position: 0 40px; }
+        }
+      `}} />
     </div>
   );
 };
 
-const NavButton = ({ icon, label, active = false }) => (
-  <button className={`flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all ${
+const HudCard = ({ icon, value, label }) => (
+  <div className="bg-black/40 border-b-2 border-cyan-500/50 p-4 min-w-[150px] backdrop-blur-md">
+    <div className="flex items-center gap-2 mb-1">
+      {icon}
+      <span className="text-[10px] font-bold tracking-widest text-cyan-400">{label}</span>
+    </div>
+    <div className="text-2xl font-['Orbitron'] font-bold text-white italic">{value}</div>
+  </div>
+);
+
+const NavTab = ({ icon, label, active = false }) => (
+  <button className={`w-full flex items-center gap-4 px-6 py-4 transition-all border-l-2 ${
     active 
-      ? 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/20' 
-      : 'text-gray-500 hover:text-cyan-300 hover:bg-white/5'
+      ? 'bg-pink-500/20 border-pink-500 text-pink-300' 
+      : 'bg-black/20 border-transparent text-gray-500 hover:bg-white/5 hover:text-white'
   }`}>
     {icon}
-    <span className="tracking-widest font-['Orbitron']">{label}</span>
+    <span className="font-['Orbitron'] text-xs font-bold tracking-widest">{label}</span>
   </button>
 );
 
-const VitalStat = ({ label, value, color }) => (
-  <div className="flex flex-col items-center gap-2 min-w-[100px]">
-    <span className="text-[10px] tracking-[0.2em] text-gray-500 font-bold">{label}</span>
-    <div className="w-24 h-1.5 bg-white/5 rounded-full overflow-hidden">
+const ProgressBar = ({ label, value, color }) => (
+  <div className="space-y-1">
+    <div className="flex justify-between text-[10px] font-bold text-gray-400 uppercase tracking-tighter">
+      <span>{label}</span>
+      <span>{value}%</span>
+    </div>
+    <div className="h-1 bg-white/5 rounded-full overflow-hidden">
       <motion.div 
         initial={{ width: 0 }}
         animate={{ width: `${value}%` }}
         className={`h-full ${color}`} 
       />
     </div>
-    <span className="font-mono text-xs text-gray-400">{Math.round(value)}%</span>
   </div>
 );
 
