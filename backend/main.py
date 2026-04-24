@@ -17,6 +17,9 @@ class PlayerProgress(BaseModel):
     discovered_signals: List[str]
     battery_level: float
     scrap_count: int
+    hunger: float = 100.0
+    energy: float = 100.0
+    thirst: float = 100.0
 
 # In-memory storage (Replace with DB later)
 signals_db = {}

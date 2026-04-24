@@ -7,6 +7,9 @@ const App = () => {
   const [progress, setProgress] = useState({
     battery_level: 0,
     scrap_count: 0,
+    hunger: 100,
+    energy: 100,
+    thirst: 100,
     discovered_signals: []
   });
   const [loading, setLoading] = useState(true);
@@ -15,10 +18,6 @@ const App = () => {
     // Simulated data fetching from Python Backend
     const fetchData = async () => {
       try {
-        // In a real scenario, this would be:
-        // const resSignals = await fetch('http://localhost:8000/signals');
-        // const resProgress = await fetch('http://localhost:8000/player/progress');
-        
         // Mock data for initial look
         setSignals([
           { signal_id: 'SIG_001', name: 'Abandoned Tower', is_decoded: true, timestamp: '2024-04-24 14:30' },
@@ -27,6 +26,9 @@ const App = () => {
         setProgress({
           battery_level: 85,
           scrap_count: 124,
+          hunger: 72,
+          energy: 45,
+          thirst: 60,
           discovered_signals: ['SIG_001']
         });
         setLoading(false);
@@ -74,7 +76,14 @@ const App = () => {
 
         {/* Main Content Area */}
         <section className="lg:col-span-10">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* Vitals Summary */}
+            <div className="bg-white/5 border border-white/10 rounded-xl p-5 backdrop-blur-sm col-span-1 md:col-span-2 lg:col-span-3 flex flex-wrap gap-6 justify-around">
+              <VitalStat label="HUNGER" value={progress.hunger} color="bg-orange-500" />
+              <VitalStat label="THIRST" value={progress.thirst} color="bg-blue-400" />
+              <VitalStat label="ENERGY" value={progress.energy} color="bg-yellow-400" />
+            </div>
+
             {/* Active Signals List */}
             <div className="bg-cyan-950/10 border border-cyan-900/20 rounded-xl p-6 backdrop-blur-sm">
               <div className="flex items-center justify-between mb-6">
@@ -146,6 +155,20 @@ const NavButton = ({ icon, label, active = false }) => (
     {icon}
     <span className="tracking-widest font-['Orbitron']">{label}</span>
   </button>
+);
+
+const VitalStat = ({ label, value, color }) => (
+  <div className="flex flex-col items-center gap-2 min-w-[100px]">
+    <span className="text-[10px] tracking-[0.2em] text-gray-500 font-bold">{label}</span>
+    <div className="w-24 h-1.5 bg-white/5 rounded-full overflow-hidden">
+      <motion.div 
+        initial={{ width: 0 }}
+        animate={{ width: `${value}%` }}
+        className={`h-full ${color}`} 
+      />
+    </div>
+    <span className="font-mono text-xs text-gray-400">{Math.round(value)}%</span>
+  </div>
 );
 
 export default App;

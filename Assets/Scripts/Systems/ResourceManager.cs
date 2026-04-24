@@ -11,6 +11,12 @@ namespace LastSignal.Systems
         public float maxBattery = 100f;
         public int scrapCount = 0;
 
+        [Header("Life Sim Stats")]
+        public float hunger = 100f;
+        public float energy = 100f;
+        public float thirst = 100f;
+        public float decayRate = 0.5f;
+
         private void Awake()
         {
             if (Instance == null)
@@ -22,6 +28,14 @@ namespace LastSignal.Systems
             {
                 Destroy(gameObject);
             }
+        }
+
+        private void Update()
+        {
+            // Passive decay
+            hunger = Mathf.Clamp(hunger - decayRate * Time.deltaTime, 0, 100);
+            thirst = Mathf.Clamp(thirst - (decayRate * 1.2f) * Time.deltaTime, 0, 100);
+            energy = Mathf.Clamp(energy - (decayRate * 0.5f) * Time.deltaTime, 0, 100);
         }
 
         public void AddBattery(float amount)
