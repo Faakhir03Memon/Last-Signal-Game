@@ -28,6 +28,13 @@ namespace LastSignal.Puzzles
                 isSolved = true;
                 OnPuzzleSolved?.Invoke();
                 Debug.Log("Signal Decoded!");
+                
+                // Reporting to backend
+                var source = GetComponent<LastSignal.Signals.SignalSource>();
+                if (source != null)
+                {
+                    LastSignal.Systems.NetworkManager.Instance.SendSignalDiscovery(source.signalID, source.signalName);
+                }
             }
         }
     }

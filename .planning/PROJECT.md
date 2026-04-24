@@ -3,8 +3,10 @@
 ## 🎮 Game Overview
 **Title:** Last Signal
 **Genre:** Open World + Exploration + Light Survival
-**Platform:** PC (Primary), Mobile (Target)
+**Platform:** PC (Unity), Web (React Dashboard)
 **Engine:** Unity (C#)
+**Backend:** Python (FastAPI)
+**Frontend:** React (Vite)
 **Art Style:** Low Poly (Stylized)
 
 ## 🧠 Core Gameplay Loop

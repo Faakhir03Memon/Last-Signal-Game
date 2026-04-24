@@ -3,19 +3,25 @@
 Welcome to the development of **Last Signal**. This project is structured as a Unity 3D project.
 
 ## 🚀 Getting Started
-1. **Open in Unity:** Launch Unity Hub and open this folder (`Last-Signal-Game`) as a project. Use Unity 2021.3 LTS or newer.
-2. **Setup Scene:**
-   - Create a new 3D Scene.
-   - Add a `CharacterController` to a Player object.
-   - Attach the `PlayerController.cs` and `MouseLook.cs` scripts.
-   - Create a Camera as a child of the Player and assign it to the `MouseLook` script.
-3. **Tools:**
-   - Attach `Flashlight.cs` to a child object with a Light component.
-   - Attach `SignalScanner.cs` to the player.
-4. **Managers:**
-   - Create an empty GameObject named `Systems` and attach `ResourceManager.cs` and `MemoryMissionManager.cs`.
 
-## 🎮 Controls
+### 1. Unity (The Game)
+- Open the root folder in Unity.
+- Attach `NetworkManager.cs` to a persistent object.
+- Ensure the `backendUrl` is set correctly.
+
+### 2. Backend (Python API)
+- `cd backend`
+- Install dependencies: `pip install fastapi uvicorn`
+- Run: `python main.py`
+- API docs will be at: `http://localhost:8000/docs`
+
+### 3. Frontend (Hunter Dashboard)
+- `cd frontend`
+- Install dependencies: `npm install`
+- Run: `npm run dev`
+- Open your browser to view the sci-fi dashboard.
+
+## 🕹️ Controls
 - **WASD:** Movement
 - **Mouse:** Look around
 - **Space:** Jump
