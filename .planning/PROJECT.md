@@ -1,40 +1,24 @@
-# Last Signal - Project Overview
+# Vice City Clone - Project Overview
 
-## 🎮 Game Overview
-**Title:** Last Signal
-**Genre:** Open World + Exploration + Light Survival
-**Platform:** PC (Unity), Web (React Dashboard)
+## 🌴 Game Overview
+**Title:** Vice City Clone (Project Neon)
+**Genre:** Open World Action / Third-Person Shooter / Driving
 **Engine:** Unity (C#)
 **Backend:** Python (FastAPI)
-**Frontend:** React (Vite)
-**Art Style:** Low Poly (Stylized)
+**Frontend:** React (Vite) - 80s Neon Aesthetic
+**Art Style:** Stylized Low-Poly (Vice City Vibes)
 
-## 🧠 Core Gameplay Loop
-1. **Explore:** Traverse the open world.
-2. **Detect:** Use the Signal Scanner to find lost data signals.
-3. **Solve:** Complete mini-puzzles to unlock the signal.
-4. **Experience:** Enter "Memory Missions" (mini-levels) to reconstruct stories.
-5. **Progress:** Receive rewards and upgrades to reach deeper signals.
+## 🏎️ Core Gameplay
+1. **Explore:** An open city inspired by Miami/Vice City.
+2. **Drive:** Stale cars and drive around the city.
+3. **Missions:** Complete criminal tasks for Money and Respect.
+4. **Vitals:** Track Health, Money, and Wanted Level.
 
-## 🗺️ Map Design
-- **Phase 1:** Beginner area (2km x 2km). Abandoned house, Tower, Broken server room.
-- **Phase 2:** Desert + City mix, Underground bunker.
-- **Phase 3:** Full open world with dynamic weather (Rain, Fog).
+## 🛠️ Tech Stack
+- **Unity**: 3D Environment, Third-Person Controller, Car Physics.
+- **Python**: Store player inventory, money, and mission status.
+- **React**: External "V-Net" Dashboard to track criminal empire.
 
-## 🎮 Player Mechanics
-- **Movement:** Walk, Run, Jump, Climb.
-- **Tools:** Signal Scanner, Flashlight, Battery System.
-
-## 🧩 Systems
-- **Signal Puzzle System:** Frequency matching, Wire connecting, Pattern memory.
-- **Memory Missions:** Story-driven mini-levels (Family moments, Scientist labs, Military incidents).
-- **Danger System:** Drone enemies, Corrupted AI bots, Trap signals. Stealth focus initially.
-- **Resource System:** Batteries, Scrap items for upgrades.
-
-## 🎯 Main Story
-The player is a "Signal Hunter" in a destroyed world.
-**The Twist:** The player is not human, but an AI system reconstructiing the last memories of humanity.
-
-## 🎨 Aesthetic & Sound
-- **Art:** Low poly, atmospheric.
-- **Sound:** Wind, Radio static, Distant voices. Horror/Mystery vibe.
+## 🎨 Aesthetic
+- **Colors:** Hot Pink, Neon Blue, Deep Purple.
+- **Music:** Synthwave, 80s Pop.
